@@ -7,20 +7,21 @@ EY Data Science Competition 2026
 
 Jupyter notebooks are JSON files that contain execution outputs, metadata, and counts that change frequently, making git diffs noisy and merges difficult. This project uses `nbstripout` to automatically strip outputs before committing.
 
-#### Setup (one-time)
+#### Setup (required once per clone)
+
+The `.gitattributes` file is committed and tells git to use `nbstripout` and `diff=ipynb` for notebooks. You must configure the corresponding filter and diff driver locally, or these attributes have no effect.
 
 ```bash
-# Install dependencies
+# Option A: Run the setup script
+./scripts/setup-git-filters.sh
+
+# Option B: Run manually
 pip install nbstripout nbdime
-
-# Initialize nbstripout for this repo (already done)
-nbstripout --install
-
-# Configure nbdime for better notebook diffs
-nbdime config-git --enable --global
+nbstripout --install              # Configures filter in .git/config
+nbdime config-git --enable --global   # Configures diff driver
 ```
 
-After running `nbstripout --install`, the `.gitattributes` file is automatically configured.
+On Windows (PowerShell): `.\scripts\setup-git-filters.ps1`
 
 #### What Gets Stripped
 
